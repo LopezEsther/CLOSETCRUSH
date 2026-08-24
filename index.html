@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClosetCrush — for the baddies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,500;1,6..96,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0a;
+    --white:#f7f5f2;
+    --pink:#e6127f;
+    --pink-deep:#8f1257;
+    --grey:#8a8580;
+    --line: rgba(247,245,242,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Manrope', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3, .serif{font-family:'Bodoni Moda', serif;}
+  .script{font-family:'Bodoni Moda', serif; font-style:italic; color:var(--pink);}
+  a{text-decoration:none; color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  /* NAV */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 24px;
+    background:rgba(10,10,10,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo-mark{display:flex; align-items:center; gap:10px;}
+  .logo-mark img{height:34px; width:auto;}
+  .nav-links{display:flex; gap:32px; align-items:center; font-size:14px; letter-spacing:0.04em; text-transform:uppercase;}
+  .nav-links a{opacity:0.85; transition:opacity .2s, color .2s;}
+  .nav-links a:hover{opacity:1; color:var(--pink);}
+  .nav-cta{
+    background:var(--pink); color:var(--black); font-weight:700;
+    padding:10px 20px; border-radius:999px; font-size:13px;
+    letter-spacing:0.03em; text-transform:uppercase;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .nav-cta:hover{transform:translateY(-2px); background:#ff2b96;}
+  .burger{display:none; font-size:26px; background:none; border:none; color:var(--white); cursor:pointer;}
+
+  /* HERO */
+  header.hero{
+    min-height:100svh; display:flex; flex-direction:column; justify-content:center;
+    position:relative; padding:140px 24px 80px;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(230,18,127,0.20), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 90%, rgba(230,18,127,0.10), transparent 60%),
+      var(--black);
+  }
+  .hero-eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--pink);
+    margin-bottom:24px; opacity:0; animation:fadeUp .8s ease forwards .1s;
+  }
+  .hero-eyebrow::before{content:''; width:24px; height:1px; background:var(--pink);}
+  .hero-title{
+    font-size:clamp(3rem, 9vw, 7.2rem); line-height:0.92; font-weight:500;
+    letter-spacing:-0.01em;
+    opacity:0; animation:fadeUp .9s ease forwards .25s;
+  }
+  .hero-title .line2{display:block; padding-left:clamp(0px,8vw,120px);}
+  .hero-sub{
+    max-width:520px; margin-top:28px; font-size:16px; line-height:1.6; color:#cfccc7;
+    opacity:0; animation:fadeUp .9s ease forwards .45s;
+  }
+  .hero-actions{
+    margin-top:38px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+    opacity:0; animation:fadeUp .9s ease forwards .6s;
+  }
+  .btn-primary{
+    background:var(--pink); color:var(--black); font-weight:700; padding:16px 30px;
+    border-radius:999px; font-size:14px; letter-spacing:0.03em; text-transform:uppercase;
+    transition:transform .2s ease, box-shadow .2s ease;
+    box-shadow:0 0 0 rgba(230,18,127,0);
+  }
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 10px 30px rgba(230,18,127,0.35);}
+  .btn-ghost{
+    border:1px solid var(--line); padding:16px 28px; border-radius:999px;
+    font-size:14px; letter-spacing:0.03em; text-transform:uppercase;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .btn-ghost:hover{border-color:var(--pink); color:var(--pink);}
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+
+  .hero-hanger{
+    position:absolute; right:6%; top:18%; width:120px; opacity:0.9;
+    animation: swing 6s ease-in-out infinite;
+    transform-origin: top center;
+  }
+  @keyframes swing{ 0%,100%{transform:rotate(-4deg);} 50%{transform:rotate(4deg);} }
+
+  /* MARQUEE */
+  .marquee{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:16px 0; overflow:hidden; white-space:nowrap; background:#000;
+  }
+  .marquee-track{display:inline-block; animation: scroll 26s linear infinite;}
+  .marquee-track span{
+    font-family:'Bodoni Moda', serif; font-style:italic; font-size:20px;
+    margin:0 28px; color:var(--grey);
+  }
+  .marquee-track span.pink{color:var(--pink);}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* SECTION HEADERS */
+  .section{padding:110px 0;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:56px; flex-wrap:wrap;}
+  .section-tag{font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--pink); margin-bottom:14px; display:block;}
+  .section-title{font-size:clamp(2rem, 4.5vw, 3.4rem); font-weight:500; max-width:640px;}
+  .section-desc{max-width:340px; color:#b7b3ae; font-size:15px; line-height:1.6;}
+
+  /* CATEGORY CHIPS */
+  .chip-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:64px;}
+  .chip{
+    border:1px solid var(--line); padding:10px 20px; border-radius:999px; font-size:13px;
+    letter-spacing:0.02em; cursor:pointer; transition:all .2s ease; background:transparent; color:var(--white);
+  }
+  .chip.active, .chip:hover{background:var(--pink); border-color:var(--pink); color:var(--black); font-weight:700;}
+
+  /* PRODUCT GRID */
+  .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  .card{
+    position:relative; border:1px solid var(--line); border-radius:2px; overflow:hidden;
+    background:#111;
+    transition:transform .3s ease, border-color .3s ease;
+  }
+  .card:hover{transform:translateY(-6px); border-color:var(--pink);}
+  .card-visual{
+    aspect-ratio:4/5; display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden; background:#111;
+  }
+  .card-visual svg{width:42%; height:42%; opacity:0.85;}
+  .card-visual img{
+    width:100%; height:100%; object-fit:cover; object-position:top center;
+    transition:transform .5s ease;
+  }
+  .card:hover .card-visual img{transform:scale(1.05);}
+  .card-badge{
+    position:absolute; top:14px; left:14px; background:var(--pink); color:var(--black);
+    font-size:10px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;
+    padding:6px 10px; border-radius:999px; z-index:2;
+  }
+  .card-body{padding:20px 20px 22px; border-top:1px solid var(--line);}
+  .card-cat{font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--grey); margin-bottom:6px;}
+  .card-name{font-family:'Bodoni Moda', serif; font-size:20px; margin-bottom:10px;}
+  .card-foot{display:flex; align-items:center; justify-content:space-between;}
+  .card-price{font-weight:700; font-size:15px;}
+  .card-buy{
+    font-size:11px; letter-spacing:0.06em; text-transform:uppercase; font-weight:700;
+    color:var(--pink); display:flex; align-items:center; gap:6px;
+  }
+  .card-buy:hover{color:#ff2b96;}
+
+  /* ABOUT */
+  .about{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
+  .about-visual{
+    aspect-ratio:1/1.05; border:1px solid var(--line); position:relative;
+    display:flex; align-items:center; justify-content:center; background:#111;
+  }
+  .about-visual .stamp{
+    border:2px solid var(--pink); border-radius:50%; width:150px; height:150px;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    transform:rotate(-14deg); color:var(--pink); font-family:'Bodoni Moda', serif;
+    font-style:italic; font-size:15px; line-height:1.3; padding:12px;
+  }
+  .about-num{
+    position:absolute; font-family:'Bodoni Moda', serif; color:var(--line);
+    font-size:220px; line-height:1; top:-40px; left:-10px; z-index:0; user-select:none;
+    -webkit-text-stroke:1px var(--line); color:transparent;
+  }
+  .about-copy p{color:#cfccc7; line-height:1.75; font-size:16px; margin-bottom:20px;}
+  .about-list{margin-top:32px; display:flex; flex-direction:column; gap:16px;}
+  .about-list div{display:flex; gap:16px; align-items:flex-start; border-top:1px solid var(--line); padding-top:16px;}
+  .about-list .n{font-family:'Bodoni Moda', serif; font-style:italic; color:var(--pink); font-size:18px; width:28px; flex-shrink:0;}
+
+  /* CONTACT */
+  .contact{
+    text-align:center; padding:130px 24px; position:relative;
+    background:radial-gradient(ellipse 70% 60% at 50% 30%, rgba(230,18,127,0.16), transparent 65%);
+  }
+  .contact h2{font-size:clamp(2.2rem, 6vw, 4.6rem); line-height:1.05; margin-bottom:24px;}
+  .contact p{color:#cfccc7; max-width:460px; margin:0 auto 40px; font-size:16px; line-height:1.6;}
+  .contact-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+
+  footer{
+    border-top:1px solid var(--line); padding:36px 24px; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:16px; font-size:13px; color:var(--grey);
+  }
+  footer .f-logo{font-family:'Bodoni Moda', serif; font-size:18px; color:var(--white);}
+  footer .f-links{display:flex; gap:20px;}
+  footer .f-links a:hover{color:var(--pink);}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .burger{display:block;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .about{grid-template-columns:1fr;}
+    .hero-hanger{display:none;}
+  }
+  @media (max-width:520px){
+    .grid{grid-template-columns:1fr;}
+    .hero-title .line2{padding-left:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important;}
+  }
+  :focus-visible{outline:2px solid var(--pink); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="logo-mark">
+    <img src="closetcrush-logo.jpg" alt="ClosetCrush logo">
+  </a>
+  <div class="nav-links">
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="nav-cta">DM to Shop</a>
+  </div>
+  <button class="burger" aria-label="Menu">&#9776;</button>
+</nav>
+
+<header class="hero" id="top">
+  <svg class="hero-hanger" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 10 C50 10 44 10 44 18 C44 24 50 24 50 24" stroke="#e6127f" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="50" y1="24" x2="50" y2="30" stroke="#e6127f" stroke-width="2.5"/>
+    <path d="M6 62 L50 30 L94 62" stroke="#e6127f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="2" y1="62" x2="98" y2="62" stroke="#e6127f" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+
+  <div class="wrap">
+    <span class="hero-eyebrow">Thrifted &amp; one-of-one</span>
+    <h1 class="hero-title">Your closet's<span class="line2"><span class="script">new crush.</span></span></h1>
+    <p class="hero-sub">Hand-picked baggy jeans, basic tops, gowns, bumshorts, bikinis and sweatshirts — pre-loved pieces, reloved by you. No two racks the same.</p>
+    <div class="hero-actions">
+      <a href="#shop" class="btn-primary">Shop the rack</a>
+      <a href="#about" class="btn-ghost">Our story</a>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="pink">for the baddies</span><span>baggy jeans</span><span class="pink">gowns</span><span>basic tops</span><span class="pink">bumshorts</span><span>bikinis</span><span class="pink">sweatshirts</span>
+    <span class="pink">for the baddies</span><span>baggy jeans</span><span class="pink">gowns</span><span>basic tops</span><span class="pink">bumshorts</span><span>bikinis</span><span class="pink">sweatshirts</span>
+  </div>
+</div>
+
+<section class="section" id="shop">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">The Rack</span>
+        <h2 class="section-title">Fresh thrift finds, restocked weekly.</h2>
+      </div>
+      <p class="section-desc">Every piece is one of a kind — once it's gone, it's gone. DM the item name to claim yours.</p>
+    </div>
+
+    <div class="chip-row">
+      <button class="chip active">All</button>
+      <button class="chip">Baggy Jeans</button>
+      <button class="chip">Basic Tops</button>
+      <button class="chip">Gowns</button>
+      <button class="chip">Bumshorts</button>
+      <button class="chip">Bikinis</button>
+      <button class="chip">Sweatshirts</button>
+    </div>
+
+    <div class="grid" id="product-grid">
+      <!-- Product cards -->
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap about">
+    <div class="about-visual">
+      <span class="about-num">CC</span>
+      <div class="stamp">100%<br>pre-loved</div>
+    </div>
+    <div class="about-copy">
+      <span class="section-tag">The Story</span>
+      <h2 class="section-title" style="margin-bottom:24px;">Secondhand first. Baddie always.</h2>
+      <p>ClosetCrush started as one girl's rack of thrifted finds she couldn't fit in her own closet anymore. Now it's a rotating edit of pre-loved pieces, sourced and styled for people who want main-character fits without the price tag — or the waste.</p>
+      <p>Every piece is checked, cleaned, and picked because it deserves a second life. Sustainable style isn't a trend here, it's the whole point.</p>
+      <div class="about-list">
+        <div><span class="n">01</span><span>Sourced &amp; hand-picked, not mass ordered</span></div>
+        <div><span class="n">02</span><span>Checked and cleaned before it reaches you</span></div>
+        <div><span class="n">03</span><span>Limited pieces — once it's sold, it's sold</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <span class="section-tag">Get In</span>
+  <h2 class="serif">Ready to <span class="script">crush</span> your closet?</h2>
+  <p>Slide into our DMs with the item you want, or send a message straight to WhatsApp — we'll sort sizing, price and delivery from there.</p>
+  <div class="contact-actions">
+    <a href="https://wa.me/2349023450082" target="_blank" class="btn-primary">Chat on WhatsApp</a>
+    <a href="https://www.tiktok.com/@ilorin_thrift_vendor_" target="_blank" class="btn-ghost">@ilorin_thrift_vendor_ on TikTok</a>
+  </div>
+</section>
+
+<footer>
+  <span class="f-logo">ClosetCrush</span>
+  <div class="f-links">
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="https://www.tiktok.com/@ilorin_thrift_vendor_" target="_blank">TikTok</a>
+  </div>
+  <span>&copy; 2026 ClosetCrush. For the baddies.</span>
+</footer>
+
+<script>
+  const categories = ["Baggy Jeans","Basic Tops","Gowns","Bumshorts","Bikinis","Sweatshirts"];
+
+  const icons = {
+    "Baggy Jeans": '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6h28l2 20-4 32h-9l-3-24-3 24h-9l-4-32 2-20z" stroke="#e6127f" stroke-width="2" stroke-linejoin="round"/><line x1="18" y1="16" x2="46" y2="16" stroke="#e6127f" stroke-width="2"/></svg>',
+    "Basic Tops": '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 8 12 16l4 8 6-4v32h20V20l6 4 4-8-10-8-6 4h-8l-6-4z" stroke="#e6127f" stroke-width="2" stroke-linejoin="round"/></svg>',
+    "Gowns": '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26 6h12l3 10-3 4 8 34H18l8-34-3-4 3-10z" stroke="#e6127f" stroke-width="2" stroke-linejoin="round"/><line x1="24" y1="26" x2="40" y2="26" stroke="#e6127f" stroke-width="1.5"/></svg>',
+    "Bumshorts": '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 10h32l2 16-6 28h-8l-4-18-4 18h-8l-6-28 2-16z" stroke="#e6127f" stroke-width="2" stroke-linejoin="round"/><line x1="16" y1="20" x2="48" y2="20" stroke="#e6127f" stroke-width="2"/></svg>',
+    "Bikinis": '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 20c4-8 12-8 16 0" stroke="#e6127f" stroke-width="2"/><path d="M38 20c4-8 12-8 16 0" stroke="#e6127f" stroke-width="2"/><path d="M20 42c4 6 8 6 12 6s8 0 12-6" stroke="#e6127f" stroke-width="2"/><circle cx="26" cy="42" r="3" stroke="#e6127f" stroke-width="2"/><circle cx="38" cy="42" r="3" stroke="#e6127f" stroke-width="2"/></svg>',
+    "Sweatshirts": '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 8 10 18l5 9 7-5v30h20V22l7 5 5-9-12-10-5 5h-10l-5-5z" stroke="#e6127f" stroke-width="2" stroke-linejoin="round"/><path d="M24 8c1 5 5 8 8 8s7-3 8-8" stroke="#e6127f" stroke-width="2"/></svg>'
+  };
+
+  const products = [
+    {name:"Colorblock Baggy Jeans", cat:"Baggy Jeans", price:"₦8,000", tag:"1 left", img:"jeans-colorblock.jpg"},
+    {name:"Fringe Detail Baggy Jeans", cat:"Baggy Jeans", price:"₦8,000", tag:"New in", img:"jeans-fringe.jpg"},
+    {name:"Navy Square-Neck Top", cat:"Basic Tops", price:"₦2,500", tag:"New in", img:"top-navy-square.jpg"},
+    {name:"White One-Shoulder Top", cat:"Basic Tops", price:"₦2,500", tag:"1 left", img:"top-white-oneshoulder.jpg"},
+    {name:"Cream Wrap-Tie Top", cat:"Basic Tops", price:"₦2,500", tag:"One of one", img:"top-cream-wrap.jpg"},
+    {name:"Leopard Cutout Mini Dress", cat:"Gowns", price:"₦6,000", tag:"One of one", img:"gown-leopard.jpg"},
+    {name:"Pink Floral Mini Dress", cat:"Gowns", price:"₦6,000", tag:"1 left", img:"gown-floral.jpg"},
+    {name:"Denim Cutoff Bumshorts", cat:"Bumshorts", price:"₦3,000", tag:"New in", img:"short-denim-cutoff.jpg"},
+    {name:"Mustard Bumshorts", cat:"Bumshorts", price:"₦3,000", tag:"1 left", img:"short-mustard.jpg"},
+    {name:"Navy Halter Bikini Set", cat:"Bikinis", price:"₦3,000", tag:"One of one", img:"bikini-navy.jpg"},
+    {name:"Coral Tie-Side Bikini Set", cat:"Bikinis", price:"₦3,000", tag:"New in", img:"bikini-coral.jpg"},
+    {name:"Oversized Sweatshirt", cat:"Sweatshirts", price:"₦7,000", tag:"1 left", img:"sweatshirt-pittsburgh.jpg"},
+    {name:"Cropped Sweatshirt", cat:"Sweatshirts", price:"₦7,000", tag:"New in", img:"sweatshirt-wisconsin.jpg"},
+    {name:"Affection Graphic Sweatshirt", cat:"Sweatshirts", price:"₦7,000", tag:"New in", img:"sweatshirt-affection.jpg"}
+  ];
+
+  const grid = document.getElementById('product-grid');
+
+  function render(filter){
+    grid.innerHTML = "";
+    products
+      .filter(p => filter === "All" || p.cat === filter)
+      .forEach(p => {
+        const waMsg = encodeURIComponent(`Hi! Is the "${p.name}" still available?`);
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-visual">
+            <span class="card-badge">${p.tag}</span>
+            ${p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy">` : icons[p.cat]}
+          </div>
+          <div class="card-body">
+            <div class="card-cat">${p.cat}</div>
+            <div class="card-name">${p.name}</div>
+            <div class="card-foot">
+              <span class="card-price">${p.price}</span>
+              <a class="card-buy" href="https://wa.me/2349023450082?text=${waMsg}" target="_blank">DM to Buy &#8594;</a>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+  }
+  render("All");
+
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      render(chip.textContent.trim());
+    });
+  });
+</script>
+
+</body>
+</html>
